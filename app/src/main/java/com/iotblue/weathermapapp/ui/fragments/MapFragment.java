@@ -27,22 +27,13 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.iotblue.weathermapapp.R;
 import com.iotblue.weathermapapp.application.MyApp;
-import com.iotblue.weathermapapp.callbacks.LocationInfoCallBack;
 import com.iotblue.weathermapapp.databinding.MapFragmentBinding;
 import com.iotblue.weathermapapp.helper.MyConstants;
 import com.iotblue.weathermapapp.util.DialogueUtily;
 import com.iotblue.weathermapapp.util.MapsUtily;
 import com.iotblue.weathermapapp.util.PermissionUtily;
 import com.iotblue.weathermapapp.util.SettingManager;
-import com.iotblue.weathermapapp.viewmodel.main.MainViewModel;
-
 import javax.inject.Inject;
-
-import io.reactivex.Scheduler;
-import io.reactivex.SingleObserver;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.schedulers.Schedulers;
 import timber.log.Timber;
 
 import static android.app.Activity.RESULT_OK;
@@ -52,7 +43,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback,
         GoogleMap.OnMapLongClickListener, GoogleMap.OnMapClickListener,
         GoogleMap.OnMyLocationButtonClickListener {
 
-    private MainViewModel mViewModel;
     private SupportMapFragment mapFragment;
     GoogleMap mMap;
     @Inject
@@ -156,7 +146,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback,
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
+//        mViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
         // TODO: Use the ViewModel
     }
 

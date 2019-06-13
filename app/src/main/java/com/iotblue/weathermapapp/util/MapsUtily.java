@@ -14,7 +14,6 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.Task;
-import com.iotblue.weathermapapp.callbacks.LocationInfoCallBack;
 
 import java.io.IOException;
 import java.util.List;
