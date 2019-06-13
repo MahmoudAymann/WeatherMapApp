@@ -1,0 +1,78 @@
+ext {
+    navigation_ver = '2.1.0-alpha05'
+    dagger2_ver = '2.23.1'
+    lottie_ver = '3.0.0-beta2'
+    rxAndroid = '2.1.1'
+    rxJAVA = '2.2.9'
+}
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 29
+    buildToolsVersion "29.0.0"
+    defaultConfig {
+        applicationId "com.iotblue.weathermapapp"
+        minSdkVersion 21
+        targetSdkVersion 29
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility = '1.8'
+        targetCompatibility = '1.8'
+    }
+
+    dataBinding {
+        enabled = true
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'androidx.appcompat:appcompat:1.1.0-beta01'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.0-beta1'
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0-alpha01'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'androidx.recyclerview:recyclerview:1.0.0'
+    implementation 'com.google.android.material:material:1.0.0'
+    testImplementation 'junit:junit:4.13-beta-3'
+    androidTestImplementation 'androidx.test:runner:1.2.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+
+    //GoogleMaps
+    implementation 'com.google.android.gms:play-services-maps:16.1.0'
+    implementation 'com.google.android.gms:play-services-location:16.0.0'
+
+    //Timber log
+    implementation 'com.jakewharton.timber:timber:4.7.1'
+
+    //Architecture Component:
+    //Navigation
+    implementation "androidx.navigation:navigation-fragment:${navigation_ver}"
+    implementation "androidx.navigation:navigation-ui:${navigation_ver}"
+
+    //Dagger2
+    implementation "com.google.dagger:dagger:${dagger2_ver}"
+    annotationProcessor "com.google.dagger:dagger-compiler:${dagger2_ver}"
+    compileOnly 'javax.annotation:jsr250-api:1.0'
+
+    //Yoyo view animation
+    implementation 'com.daimajia.easing:library:2.1@aar'
+    implementation 'com.daimajia.androidanimations:library:2.3@aar'
+
+    //lottie animation
+    implementation "com.airbnb.android:lottie:${lottie_ver}"
+    implementation 'com.jgb.lordsaac.igb.progresslitieigb:progresslottieigb:0.0.1'
+
+    //RxJava, RxAndroid
+    implementation "io.reactivex.rxjava2:rxandroid:${rxAndroid}"
+    implementation "io.reactivex.rxjava2:rxjava:${rxJAVA}"
+
+}
