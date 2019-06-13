@@ -14,16 +14,28 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RemoteViewsService;
 import android.widget.Toast;
 
 import com.iotblue.weathermapapp.R;
 import com.iotblue.weathermapapp.adapter.callback.BookmarkCallBack;
 import com.iotblue.weathermapapp.adapter.parent.BookmarkAdapter;
 import com.iotblue.weathermapapp.data.local.entity.Bookmark;
+import com.iotblue.weathermapapp.data.models.WeatherModel;
+import com.iotblue.weathermapapp.data.network.CryptoCompareAPI;
+import com.iotblue.weathermapapp.data.remote.RemoteRebo;
 import com.iotblue.weathermapapp.databinding.FragmentBookmarkBinding;
+import com.iotblue.weathermapapp.helper.MyConstants;
 import com.iotblue.weathermapapp.viewmodel.BookmarkViewModel;
 
 import org.jetbrains.annotations.NotNull;
+
+import java.util.HashMap;
+import java.util.Objects;
+
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 import static android.widget.Toast.LENGTH_SHORT;
 
@@ -34,13 +46,14 @@ public class BookmarkFragment extends Fragment implements BookmarkCallBack {
     BookmarkAdapter bookmarkAdapter;
     private RecyclerView recyclerView;
     private FragmentActivity mContext;
-
+    private RemoteRebo Remote;
     public BookmarkFragment() {
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
 
     }
 
@@ -50,8 +63,8 @@ public class BookmarkFragment extends Fragment implements BookmarkCallBack {
         data = DataBindingUtil.inflate(inflater, R.layout.fragment_bookmark, container, false);
 
         initRecyclerView();
-
-        bookmarkViewModel = ViewModelProviders.of(this).get(BookmarkViewModel.class);
+        Remote=new RemoteRebo(Objects.requireNonNull(getActivity()).getApplicationContext());
+         bookmarkViewModel = ViewModelProviders.of(this).get(BookmarkViewModel.class);
         bookmarkViewModel.getAllBookmarks().observe(this, bookmarks -> {
             //update RecyclerView
             bookmarkAdapter.submitList(bookmarks);
@@ -85,10 +98,29 @@ public class BookmarkFragment extends Fragment implements BookmarkCallBack {
 
     @Override
     public void onItemClick(Bookmark bookmark) {
-        //do the background task
+        //do thest backobground task
+        HashMap<String,Object>data=new HashMap<>();
+        data.put("lat",bookmark.getLat());
+        data.put("lon",bookmark.getLon());
+        data.put("appid", MyConstants.APP_ID);
+        data.put("unit",MyConstants.UNIT);
+        Disposable disposable=
+        Remote.getData(data).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(s->{
+                    Toast.makeText(BookmarkFragment.this.mContext,"Sucess", LENGTH_SHORT).show();
+                    Toast.makeText(BookmarkFragment.this.mContext,s.getName(), LENGTH_SHORT).show();
+                    openFragment(s);
+                },
+                e->{
+            e.printStackTrace();
+            Toast.makeText(BookmarkFragment.this.mContext,"Faild To Get Data", LENGTH_SHORT).show();
+                });
+
+    }
+
+    private void openFragment(WeatherModel model) {
         assert getFragmentManager() != null;
         Bundle bundle = new Bundle();
-        bundle.putString("cc", "asdasndjndjkajnsjkdnfkjadfdhsbfhbsdfhfhadsfhadsbfshadbfbasdf");
+        bundle.putParcelable("model", model);
         DetailsFragment fragment = new DetailsFragment();
         fragment.setArguments(bundle);
         fragment.show(getFragmentManager(), "detailsFragment");

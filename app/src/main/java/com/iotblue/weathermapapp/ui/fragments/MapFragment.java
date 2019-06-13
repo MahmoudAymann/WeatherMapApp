@@ -27,13 +27,17 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.iotblue.weathermapapp.R;
 import com.iotblue.weathermapapp.application.MyApp;
+import com.iotblue.weathermapapp.data.local.entity.Bookmark;
 import com.iotblue.weathermapapp.databinding.MapFragmentBinding;
 import com.iotblue.weathermapapp.helper.MyConstants;
 import com.iotblue.weathermapapp.util.DialogueUtily;
 import com.iotblue.weathermapapp.util.MapsUtily;
 import com.iotblue.weathermapapp.util.PermissionUtily;
 import com.iotblue.weathermapapp.util.SettingManager;
+import com.iotblue.weathermapapp.viewmodel.BookmarkViewModel;
+
 import javax.inject.Inject;
+
 import timber.log.Timber;
 
 import static android.app.Activity.RESULT_OK;
@@ -57,6 +61,9 @@ public class MapFragment extends Fragment implements OnMapReadyCallback,
     private MapFragmentBinding data;
     private Marker currentMarker;
     private Address address;
+    private BookmarkViewModel bookmarkViewModel;
+    private String name;
+    private double lat, lon;
 
     public static MapFragment newInstance() {
         return new MapFragment();
@@ -76,7 +83,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback,
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        bookmarkViewModel = ViewModelProviders.of(this).get(BookmarkViewModel.class);
     }
 
     @Nullable
@@ -92,6 +99,11 @@ public class MapFragment extends Fragment implements OnMapReadyCallback,
 
     private void initUI() {
         data.locLottieView.setAnimation(R.raw.location_anim);
+        data.addToBookmarkBtn.setOnClickListener(view -> {
+            bookmarkViewModel.insert(new Bookmark(name, lat, lon));
+            Toast.makeText(mContext, "inserted", Toast.LENGTH_SHORT).show();
+        });
+
     }
 
     private void initGMap() {
@@ -142,13 +154,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback,
         }
     }
 
-    //after onCreateView
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-//        mViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
-        // TODO: Use the ViewModel
-    }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -216,6 +221,11 @@ public class MapFragment extends Fragment implements OnMapReadyCallback,
 
         data.addressText.setText(String.format("%s, %s, %s", address.getLocality(), address.getCountryName(), address.getAdminArea()));
         data.cardView.setVisibility(View.VISIBLE);
+
+        name = address.getLocality();
+        lat = latLng.latitude;
+        lon = latLng.longitude;
+
 
     }
 

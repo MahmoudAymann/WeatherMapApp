@@ -1,5 +1,6 @@
 package com.iotblue.weathermapapp.ui.fragments;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
 
@@ -15,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.iotblue.weathermapapp.R;
+import com.iotblue.weathermapapp.data.models.WeatherModel;
 import com.iotblue.weathermapapp.databinding.FragmentDetailsBinding;
 
 import org.jetbrains.annotations.NotNull;
@@ -29,7 +31,8 @@ import org.jetbrains.annotations.NotNull;
 public class DetailsFragment extends BottomSheetDialogFragment {
 
     private FragmentDetailsBinding data;
-    private String text;
+
+    WeatherModel model;
 
     @Nullable
     @Override
@@ -37,10 +40,19 @@ public class DetailsFragment extends BottomSheetDialogFragment {
                              @Nullable Bundle savedInstanceState) {
 
         data = DataBindingUtil.inflate(inflater, R.layout.fragment_details, container, false);
-
-        data.txt.setText(text);
-
+        initUI();
         return data.getRoot();
+    }
+
+    @SuppressLint("SetTextI18n")
+    private void initUI() {
+        data.txtTemp.setText(new StringBuilder().append("Tempreture: ").append(model.getMain().getTemp()).toString());
+        data.txtHum.setText(new StringBuilder().append("Humidity: ").append(model.getMain().getHumidity()).toString());
+        data.txtWind.setText(new StringBuilder().append("Wind Deg: ").append(model.getWind().getDeg()).append(",\n").append("Wind Speed: ").append(model.getWind().getSpeed()).toString());
+        if (model.getWeather().get(0).getMain().equals("Rain"))
+            data.txtRainChances.setText("Rain chances: YES");
+        else
+            data.txtRainChances.setText("Rain chances: NO");
     }
 
     @Override
@@ -48,7 +60,7 @@ public class DetailsFragment extends BottomSheetDialogFragment {
         super.onCreate(savedInstanceState);
         Bundle bundle = getArguments();
         if (bundle != null) {
-            text = bundle.getString("cc");
+            this.model = bundle.getParcelable("model");
         }
     }
 

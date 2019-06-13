@@ -45,6 +45,7 @@ public class Repository {
         return allBookmarks;
     }
 
+    //TODO implmemet RX here
     private static class InsertBookmarkAsyncTask extends AsyncTask<Bookmark , Void, Void> {
         private BookmarkDao noteDao;
         private InsertBookmarkAsyncTask(BookmarkDao noteDao){
@@ -58,6 +59,7 @@ public class Repository {
         }
     }
 
+    //TODO implmemet RX here
     private static class UpdateBookmarkAsyncTask extends AsyncTask<Bookmark , Void, Void>{
         private BookmarkDao noteDao;
         private UpdateBookmarkAsyncTask(BookmarkDao noteDao){
@@ -71,6 +73,7 @@ public class Repository {
         }
     }
 
+    //TODO implmemet RX here
     private static class DeleteBookmarkAsyncTask extends AsyncTask<Bookmark , Void, Void>{
         private BookmarkDao noteDao;
         private DeleteBookmarkAsyncTask(BookmarkDao noteDao){
@@ -84,6 +87,7 @@ public class Repository {
         }
     }
 
+    //TODO implmemet RX here
     private static class DeleteAllBookmarksAsyncTask extends AsyncTask<Void , Void, Void>{
         private BookmarkDao noteDao;
         private DeleteAllBookmarksAsyncTask(BookmarkDao noteDao){

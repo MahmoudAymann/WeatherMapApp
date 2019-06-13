@@ -43,6 +43,9 @@ public abstract class BookmarkDatabase extends RoomDatabase {
         }
     };
 
+
+
+    //TODO implement Rx here
     private static class PopulateDbAsyncTask extends AsyncTask<Void, Void, Void> {
         private BookmarkDao bookmarkDao;
 
@@ -52,10 +55,7 @@ public abstract class BookmarkDatabase extends RoomDatabase {
 
         @Override
         protected Void doInBackground(Void... voids) {
-            bookmarkDao.insert(new Bookmark("Cairo", 30.222, 14.0236));
-            bookmarkDao.insert(new Bookmark("Alex", -45.00, -125.21));
-            bookmarkDao.insert(new Bookmark("Mansoura", 1589, 14789));
-            bookmarkDao.insert(new Bookmark("Matroh", 1499, 1452.236));
+            bookmarkDao.insert(new Bookmark("Cairo", 30.0444, 31.2357));
             return null;
         }
     }
