@@ -4,7 +4,7 @@
 
     To get one, follow this link, follow the directions and press "Create" at the end:
 
-    https://console.developers.google.com/flows/enableapi?apiid=maps_android_backend&keyType=CLIENT_SIDE_ANDROID&r=C2:A9:35:09:29:48:90:F1:13:D2:CB:F1:B9:6B:46:6C:E3:D4:88:2C%3Bcom.iotblue.weathermapapp
+    https://console.developers.google.com/flows/enableapi?apiid=maps_android_backend&keyType=CLIENT_SIDE_ANDROID&r=C2:A9:35:09:29:48:90:F1:13:D2:CB:F1:B9:6B:46:6C:E3:D4:88:2C%3Bcom.maymanm.weathermapapp
 
     You can also add your credentials to an existing key, using these values:
 
